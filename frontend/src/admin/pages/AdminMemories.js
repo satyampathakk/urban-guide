@@ -2,27 +2,28 @@ import React, { useEffect, useState, useRef, useCallback } from 'react';
 import adminApi from '../adminApi';
 import { toast } from '../AdminApp';
 import AdminModal from '../AdminModal';
+import { mediaUrl } from '../../utils/mediaUrl';
 import './AdminMemories.css';
 
 const EMPTY = { title: '', caption: '', image_url: '' };
 
 export default function AdminMemories() {
-  const [items, setItems]         = useState([]);
+  const [items, setItems] = useState([]);
   const [editModal, setEditModal] = useState(false);
   const [bulkModal, setBulkModal] = useState(false);
-  const [form, setForm]           = useState(EMPTY);
-  const [editing, setEditing]     = useState(null);
-  const [search, setSearch]       = useState('');
+  const [form, setForm] = useState(EMPTY);
+  const [editing, setEditing] = useState(null);
+  const [search, setSearch] = useState('');
 
   // Bulk upload state
-  const [bulkFiles, setBulkFiles]     = useState([]); // [{ file, preview, url, uploading, done, error }]
+  const [bulkFiles, setBulkFiles] = useState([]); // [{ file, preview, url, uploading, done, error }]
   const [bulkUploading, setBulkUploading] = useState(false);
-  const [dragOver, setDragOver]       = useState(false);
+  const [dragOver, setDragOver] = useState(false);
 
-  const fileRef     = useRef();
+  const fileRef = useRef();
   const bulkFileRef = useRef();
 
-  const load = () => adminApi.get('/admin/memories').then(r => setItems(r.data)).catch(() => {});
+  const load = () => adminApi.get('/admin/memories').then(r => setItems(r.data)).catch(() => { });
   useEffect(() => { load(); }, []);
 
   // ── Edit single memory ────────────────────────────────────────────────────
@@ -58,13 +59,13 @@ export default function AdminMemories() {
     const newEntries = Array.from(fileList)
       .filter(f => f.type.startsWith('image/'))
       .map(file => ({
-        id:        Math.random().toString(36).slice(2),
+        id: Math.random().toString(36).slice(2),
         file,
-        preview:   URL.createObjectURL(file),
-        url:       '',
+        preview: URL.createObjectURL(file),
+        url: '',
         uploading: false,
-        done:      false,
-        error:     false,
+        done: false,
+        error: false,
       }));
     setBulkFiles(prev => [...prev, ...newEntries]);
   }, []);
@@ -141,7 +142,7 @@ export default function AdminMemories() {
                 <tr key={item.id}>
                   <td>
                     {item.image_url
-                      ? <img src={item.image_url} alt="" style={{ width: 48, height: 48, objectFit: 'cover', borderRadius: 8 }} />
+                      ? <img src={mediaUrl(item.image_url)} alt="" style={{ width: 48, height: 48, objectFit: 'cover', borderRadius: 8 }} />
                       : <div style={{ width: 48, height: 48, background: 'var(--as2)', borderRadius: 8, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.2rem' }}>📷</div>
                     }
                   </td>
@@ -185,7 +186,7 @@ export default function AdminMemories() {
               onChange={e => setForm(f => ({ ...f, image_url: e.target.value }))}
               placeholder="https://..." />
             {form.image_url && (
-              <img src={form.image_url} alt="preview"
+              <img src={mediaUrl(form.image_url)} alt="preview"
                 style={{ marginTop: 8, maxHeight: 120, borderRadius: 8, objectFit: 'cover' }} />
             )}
           </div>
@@ -230,8 +231,8 @@ export default function AdminMemories() {
                   <img src={entry.preview} alt="" className="bulk-preview-img" />
                   <div className="bulk-preview-overlay">
                     {entry.uploading && <div className="bulk-spinner" />}
-                    {entry.done    && <span className="bulk-status-icon">✓</span>}
-                    {entry.error   && <span className="bulk-status-icon error">✗</span>}
+                    {entry.done && <span className="bulk-status-icon">✓</span>}
+                    {entry.error && <span className="bulk-status-icon error">✗</span>}
                     {!entry.uploading && !entry.done && !entry.error && (
                       <button className="bulk-remove-btn" onClick={() => removeFile(entry.id)}>✕</button>
                     )}

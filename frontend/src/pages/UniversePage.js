@@ -68,8 +68,6 @@ function MemoryBox({ memories, memIdx }) {
           </AnimatePresence>
         </div>
 
-        <div className="uv-seam-h" />
-        <div className="uv-seam-v" />
         <div className="uv-screw uv-screw-tl" />
         <div className="uv-screw uv-screw-tr" />
         <div className="uv-screw uv-screw-bl" />

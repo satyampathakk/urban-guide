@@ -248,29 +248,6 @@
   font-size: 4.5rem;
 }
 
-/* Seam lines */
-.uv-seam-h {
-  position: absolute;
-  top: 50%;
-  left: 0; right: 0;
-  height: 3px;
-  background: linear-gradient(90deg, transparent, #120800 20%, #120800 80%, transparent);
-  transform: translateY(-50%);
-  z-index: 8;
-  pointer-events: none;
-}
-
-.uv-seam-v {
-  position: absolute;
-  left: 50%;
-  top: 0; bottom: 0;
-  width: 3px;
-  background: linear-gradient(180deg, transparent, #120800 20%, #120800 80%, transparent);
-  transform: translateX(-50%);
-  z-index: 8;
-  pointer-events: none;
-}
-
 /* Screws */
 .uv-screw {
   position: absolute;

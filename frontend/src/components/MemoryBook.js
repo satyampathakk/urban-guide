@@ -23,7 +23,41 @@ function shuffle(arr) {
   return a;
 }
 
-// Slight random tilt per card — seeded by index so it's stable after shuffle
+function MemoryCard({ mem, i, onClick }) {
+  const [imgFailed, setImgFailed] = useState(false);
+  const showImg = mem.image_url && !imgFailed;
+
+  return (
+    <motion.div
+      className="mb-card"
+      style={{ '--tilt': `${TILTS[i % TILTS.length]}deg` }}
+      initial={{ opacity: 0, y: 40, rotate: TILTS[i % TILTS.length] }}
+      animate={{ opacity: 1, y: 0, rotate: TILTS[i % TILTS.length] }}
+      transition={{ duration: 0.5, delay: i * 0.07 }}
+      whileHover={{ scale: 1.06, rotate: 0, zIndex: 10 }}
+      whileTap={{ scale: 0.97 }}
+      onClick={onClick}
+    >
+      <div className="mb-photo">
+        {showImg ? (
+          <img src={mediaUrl(mem.image_url)} alt={mem.title} className="mb-img"
+            onError={() => setImgFailed(true)} />
+        ) : (
+          <div className="mb-emoji-fill"
+            style={{ background: `hsl(${(i * 47 + 280) % 360}deg, 40%, 18%)` }}>
+            {EMOJI_FALLBACKS[i % EMOJI_FALLBACKS.length]}
+          </div>
+        )}
+      </div>
+      <div className="mb-caption-strip">
+        <span className="mb-card-title">{mem.title}</span>
+        <span className="mb-card-date">
+          {mem.date_created ? new Date(mem.date_created).toLocaleDateString('en-US', { month: 'short', year: 'numeric' }) : ''}
+        </span>
+      </div>
+    </motion.div>
+  );
+}
 const TILTS = [-3, -1.5, 0, 1.5, 3, -2, 2, -1, 1, -2.5, 2.5, 0.5];
 
 const EMOJI_FALLBACKS = ['💕','🌹','✨','💌','🦋','🌙','🎀','🌸','💫','🎶','🌺','💝'];
@@ -77,10 +111,15 @@ export default function MemoryBook() {
             <div className="mb-photo">
               {mem.image_url ? (
                 <img src={mediaUrl(mem.image_url)} alt={mem.title} className="mb-img"
-                  onError={e => { e.target.style.display = 'none'; e.target.nextSibling.style.display = 'flex'; }} />
+                  onError={e => {
+                    e.target.style.display = 'none';
+                    e.target.nextSibling.style.display = 'flex';
+                  }} />
               ) : null}
-              <div className="mb-emoji-fill" style={{ display: mem.image_url ? 'none' : 'flex',
-                background: `hsl(${(i * 47 + 280) % 360}deg, 40%, 18%)` }}>
+              <div className="mb-emoji-fill" style={{
+                display: mem.image_url ? 'none' : 'flex',
+                background: `hsl(${(i * 47 + 280) % 360}deg, 40%, 18%)`
+              }}>
                 {EMOJI_FALLBACKS[i % EMOJI_FALLBACKS.length]}
               </div>
             </div>
