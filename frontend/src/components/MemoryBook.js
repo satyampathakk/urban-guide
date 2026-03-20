@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import axios from 'axios';
+import { mediaUrl } from '../utils/mediaUrl';
 import './MemoryBook.css';
 
 const FALLBACK = [
@@ -75,7 +76,7 @@ export default function MemoryBook() {
           >
             <div className="mb-photo">
               {mem.image_url ? (
-                <img src={mem.image_url} alt={mem.title} className="mb-img"
+                <img src={mediaUrl(mem.image_url)} alt={mem.title} className="mb-img"
                   onError={e => { e.target.style.display = 'none'; e.target.nextSibling.style.display = 'flex'; }} />
               ) : null}
               <div className="mb-emoji-fill" style={{ display: mem.image_url ? 'none' : 'flex',
@@ -107,7 +108,7 @@ export default function MemoryBook() {
               onClick={e => e.stopPropagation()}>
 
               {selected.image_url ? (
-                <img src={selected.image_url} alt={selected.title} className="mb-lb-img"
+                <img src={mediaUrl(selected.image_url)} alt={selected.title} className="mb-lb-img"
                   onError={e => { e.target.style.display = 'none'; }} />
               ) : (
                 <div className="mb-lb-emoji" style={{ background: `hsl(${(memories.findIndex(m=>m.id===selected.id)*47+280)%360}deg,40%,18%)` }}>

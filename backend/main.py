@@ -93,6 +93,13 @@ def init_db():
     except Exception:
         pass
 
+    # Migrate: add in_game column to memories if missing
+    try:
+        cursor.execute("ALTER TABLE memories ADD COLUMN in_game INTEGER DEFAULT 1")
+        conn.commit()
+    except Exception:
+        pass
+
     # Anniversary events table
     cursor.execute('''
         CREATE TABLE IF NOT EXISTS anniversary_events (

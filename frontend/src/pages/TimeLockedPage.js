@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import axios from 'axios';
+import { mediaUrl } from '../utils/mediaUrl';
 import './TimeLockedPage.css';
 
 // Fallback sample data
@@ -139,7 +140,7 @@ const TimeLockedPage = () => {
               <p className="tl-modal-date">{formatDate(selected.unlock_at)}</p>
               {selected.image_url && (
                 <img
-                  src={selected.image_url}
+                  src={mediaUrl(selected.image_url)}
                   alt={selected.title}
                   className="tl-modal-img"
                   onError={e => { e.target.style.display = 'none'; }}

@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import axios from 'axios';
+import { mediaUrl } from '../utils/mediaUrl';
 import './TimelinePage.css';
 
 const FALLBACK = [
@@ -108,7 +109,7 @@ export default function TimelinePage() {
               <div className="timeline-card glass">
                 {item.media_url && (
                   <div className="timeline-img-wrap">
-                    <img src={item.media_url} alt={item.title} className="timeline-img"
+                    <img src={mediaUrl(item.media_url)} alt={item.title} className="timeline-img"
                       onError={e => { e.target.parentElement.style.display = 'none'; }} />
                   </div>
                 )}
@@ -175,7 +176,7 @@ export default function TimelinePage() {
                     </button>
                     {form.media_url && (
                       <>
-                        <img src={form.media_url} alt="" className="tl-edit-thumb" />
+                        <img src={mediaUrl(form.media_url)} alt="" className="tl-edit-thumb" />
                         <button type="button" className="tl-remove-btn"
                           onClick={() => f('media_url', '')}>✕</button>
                       </>

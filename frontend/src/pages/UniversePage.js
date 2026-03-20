@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import axios from 'axios';
+import { mediaUrl } from '../utils/mediaUrl';
 import './UniversePage.css';
 
 const FALLBACK_MEMORIES = [
@@ -40,7 +41,7 @@ function MemoryBox({ memories, memIdx }) {
 
   const imgOrEmoji = (mem, i) =>
     mem?.image_url
-      ? <img src={mem.image_url} alt={mem?.title} className="uv-box-img"
+      ? <img src={mediaUrl(mem.image_url)} alt={mem?.title} className="uv-box-img"
           onError={e => { e.target.style.display = 'none'; }} />
       : <div className="uv-box-emoji" style={{ background: `hsl(${(i * 60 + 280) % 360}deg,40%,14%)` }}>
           {EMOJIS[i % EMOJIS.length]}

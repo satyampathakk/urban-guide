@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import axios from 'axios';
+import { mediaUrl } from '../utils/mediaUrl';
 import './PhotoWheelPage.css';
 
 const FALLBACK = [
@@ -144,7 +145,7 @@ function RotatingDisc({ memories, onActiveChange }) {
           <div key={i} className="rd-segment" style={{ transform: `rotate(${angle}deg)` }}>
             <div className="rd-segment-content">
               {mem.image_url ? (
-                <img src={mem.image_url} alt={mem.title} className="rd-seg-img"
+                <img src={mediaUrl(mem.image_url)} alt={mem.title} className="rd-seg-img"
                   onError={e => { e.target.style.display='none'; }} />
               ) : (
                 <div className="rd-seg-emoji" style={{ background:`hsl(${i*60+280}deg,50%,20%)` }}>
@@ -223,7 +224,7 @@ export default function PhotoWheelPage() {
                 {curMem?.image_url && (
                   <img
                     key={curMem.id}
-                    src={curMem.image_url}
+                    src={mediaUrl(curMem.image_url)}
                     alt={curMem?.title}
                     className="pw-full-img"
                     onError={e => { e.target.style.display = 'none'; }}
@@ -308,7 +309,7 @@ function PanelSlot({ row, col, prevMem, flipping }) {
             row=1 → bottom half→ translateY(-50%)
           */}
           <img
-            src={prevMem.image_url}
+            src={mediaUrl(prevMem.image_url)}
             alt=""
             className="pw-slot-img"
             style={{

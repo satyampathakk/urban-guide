@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import axios from 'axios';
+import { mediaUrl } from '../utils/mediaUrl';
 import './MemoryMatchPage.css';
 
 // ── Difficulty config ─────────────────────────────────────────────────────────
@@ -238,7 +239,7 @@ export default function MemoryMatchPage() {
           {cards.filter((c, i, arr) => arr.findIndex(x => x.memId === c.memId) === i).map(c => (
             <div key={c.memId} className="mm-collage-item">
               {c.image_url
-                ? <img src={c.image_url} alt={c.title} onError={e => { e.target.style.display='none'; }} />
+                ? <img src={mediaUrl(c.image_url)} alt={c.title} onError={e => { e.target.style.display='none'; }} />
                 : <span className="mm-collage-emoji">{c.emoji}</span>}
             </div>
           ))}
@@ -295,7 +296,7 @@ export default function MemoryMatchPage() {
               {/* Front */}
               <div className="mm-card-front">
                 {card.image_url
-                  ? <img src={card.image_url} alt={card.title} className="mm-card-img"
+                  ? <img src={mediaUrl(card.image_url)} alt={card.title} className="mm-card-img"
                       onError={e => { e.target.style.display='none'; e.target.nextSibling.style.display='flex'; }} />
                   : null}
                 <div className="mm-card-emoji-fallback" style={{ display: card.image_url ? 'none' : 'flex' }}>
@@ -335,7 +336,7 @@ export default function MemoryMatchPage() {
               <div className="mm-reveal-match-badge">💕 Match!</div>
 
               {revealCard.image_url ? (
-                <img src={revealCard.image_url} alt={revealCard.title} className="mm-reveal-img"
+                <img src={mediaUrl(revealCard.image_url)} alt={revealCard.title} className="mm-reveal-img"
                   onError={e => { e.target.style.display='none'; }} />
               ) : (
                 <div className="mm-reveal-emoji">{revealCard.emoji}</div>
