@@ -5,7 +5,7 @@ import AdminModal from '../AdminModal';
 import { mediaUrl } from '../../utils/mediaUrl';
 import './AdminMemories.css';
 
-const EMPTY = { title: '', caption: '', image_url: '' };
+const EMPTY = { title: '', caption: '', image_url: '', date_created: '' };
 
 export default function AdminMemories() {
   const [items, setItems] = useState([]);
@@ -28,7 +28,12 @@ export default function AdminMemories() {
 
   // ── Edit single memory ────────────────────────────────────────────────────
   const openEdit = (item) => {
-    setForm({ title: item.title, caption: item.caption || '', image_url: item.image_url || '' });
+    setForm({
+      title: item.title,
+      caption: item.caption || '',
+      image_url: item.image_url || '',
+      date_created: item.date_created ? item.date_created.slice(0, 10) : '',
+    });
     setEditing(item.id);
     setEditModal(true);
   };
@@ -179,6 +184,12 @@ export default function AdminMemories() {
             <textarea className="admin-textarea" value={form.caption}
               onChange={e => setForm(f => ({ ...f, caption: e.target.value }))} rows={3}
               placeholder="Write something about this memory..." />
+          </div>
+          <div className="admin-form-group">
+            <label>Date</label>
+            <input className="admin-input" type="date"
+              value={form.date_created}
+              onChange={e => setForm(f => ({ ...f, date_created: e.target.value }))} />
           </div>
           <div className="admin-form-group">
             <label>Image URL</label>

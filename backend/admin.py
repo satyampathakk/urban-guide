@@ -202,6 +202,7 @@ class MemoryBody(BaseModel):
     title: str
     caption: Optional[str] = ""
     image_url: Optional[str] = ""
+    date_created: Optional[str] = None
 
 @router.get("/memories")
 def list_memories(user=Depends(verify_token)):
@@ -226,8 +227,12 @@ def create_memory(body: MemoryBody, user=Depends(verify_token)):
 @router.put("/memories/{mid}")
 def update_memory(mid: int, body: MemoryBody, user=Depends(verify_token)):
     conn = db()
-    conn.execute("UPDATE memories SET title=?,caption=?,image_url=? WHERE id=?",
-                 (body.title, body.caption, body.image_url, mid))
+    if body.date_created:
+        conn.execute("UPDATE memories SET title=?,caption=?,image_url=?,date_created=? WHERE id=?",
+                     (body.title, body.caption, body.image_url, body.date_created, mid))
+    else:
+        conn.execute("UPDATE memories SET title=?,caption=?,image_url=? WHERE id=?",
+                     (body.title, body.caption, body.image_url, mid))
     conn.commit(); conn.close()
     log_action("updated", "memory", mid)
     return {"id": mid, **body.dict()}
