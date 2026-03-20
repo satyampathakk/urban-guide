@@ -2,7 +2,10 @@ import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import './Messaging.css';
 
-const API = 'http://localhost:8000';
+const API = '';
+
+// Derive WebSocket URL from current page location so it works in any environment
+const WS_URL = `${window.location.protocol === 'https:' ? 'wss' : 'ws'}://${window.location.host}/ws`;
 
 const Messaging = () => {
   const [messages, setMessages] = useState([]);
@@ -25,7 +28,7 @@ const Messaging = () => {
   }, [sender]);
 
   useEffect(() => {
-    const websocket = new WebSocket(`ws://localhost:8000/ws`);
+    const websocket = new WebSocket(WS_URL);
     websocket.onopen = () => { setIsConnected(true); setWs(websocket); };
     websocket.onmessage = (e) => {
       const msg = JSON.parse(e.data);
@@ -246,7 +249,7 @@ const Messaging = () => {
 
 // Renders the right content based on message type
 const MessageContent = ({ msg }) => {
-  const base = 'http://localhost:8000';
+  const base = '';
   const url = msg.media_url ? `${base}${msg.media_url}` : null;
 
   if (msg.msg_type === 'image' && url) {

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import adminApi from '../adminApi';
 import { toast } from '../AdminApp';
 
-const BASE = 'http://localhost:8000';
+const BASE = '';
 const typeIcon = t => ({ image: '🖼️', video: '🎬', audio: '🎤', file: '📎' }[t] || '💬');
 
 export default function AdminMessages() {

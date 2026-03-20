@@ -51,7 +51,7 @@ export default function TimelinePage() {
     try {
       const fd = new FormData();
       fd.append('file', file);
-      const { data } = await axios.post('http://localhost:8000/admin/upload', fd, {
+      const { data } = await axios.post('/admin/upload', fd, {
         headers: { Authorization: `Bearer ${ADMIN_TOKEN()}` },
       });
       setForm(p => ({ ...p, media_url: data.url }));
@@ -64,7 +64,7 @@ export default function TimelinePage() {
     if (isFallback) { alert('Connect to the backend to save changes.'); return; }
     setSaving(true);
     try {
-      await axios.put(`http://localhost:8000/admin/timeline/${editing.id}`, form, {
+      await axios.put(`/admin/timeline/${editing.id}`, form, {
         headers: { Authorization: `Bearer ${ADMIN_TOKEN()}` },
       });
       setEditing(null);

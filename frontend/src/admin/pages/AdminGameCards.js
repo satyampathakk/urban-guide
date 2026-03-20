@@ -4,7 +4,7 @@ import { toast } from '../AdminApp';
 import AdminModal from '../AdminModal';
 import './AdminGameCards.css';
 
-const BASE = 'http://localhost:8000';
+const BASE = '';
 
 export default function AdminGameCards() {
   const [cards, setCards]           = useState([]);

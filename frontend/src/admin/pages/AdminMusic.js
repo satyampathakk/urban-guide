@@ -3,7 +3,7 @@ import adminApi from '../adminApi';
 import { toast } from '../AdminApp';
 import AdminModal from '../AdminModal';
 
-const BASE = 'http://localhost:8000';
+const BASE = '';
 const EMPTY = { title: '', artist: '', file_url: '', is_active: 1, sort_order: 0 };
 
 export default function AdminMusic() {

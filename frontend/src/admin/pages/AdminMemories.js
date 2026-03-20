@@ -35,7 +35,7 @@ export default function AdminMemories() {
   const uploadSingleFile = async (file) => {
     const fd = new FormData(); fd.append('file', file);
     const { data } = await adminApi.post('/admin/upload', fd);
-    return `http://localhost:8000${data.url}`;
+    return data.url;
   };
 
   const saveEdit = async (e) => {

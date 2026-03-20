@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 import axios from 'axios';
 import './VoiceCapsule.css';
 
-const API = 'http://localhost:8000';
+const API = '';
 
 const VoiceCapsule = () => {
   const [capsules, setCapsules] = useState([]);
