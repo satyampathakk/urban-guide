@@ -2,10 +2,9 @@ import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import './Messaging.css';
 
-const API = '';
+const API = 'https://api.032403.xyz';
 
-// Derive WebSocket URL from current page location so it works in any environment
-const WS_URL = `${window.location.protocol === 'https:' ? 'wss' : 'ws'}://${window.location.host}/ws`;
+const WS_URL = 'wss://api.032403.xyz/ws';
 
 const Messaging = () => {
   const [messages, setMessages] = useState([]);
@@ -44,7 +43,7 @@ const Messaging = () => {
     fetch('/api/messages')
       .then(r => r.json())
       .then(data => setMessages(data))
-      .catch(() => {});
+      .catch(() => { });
 
     return () => websocket.close();
   }, []);
@@ -83,8 +82,8 @@ const Messaging = () => {
     if (!file) return;
     const type = file.type.startsWith('image') ? 'image'
       : file.type.startsWith('video') ? 'video'
-      : file.type.startsWith('audio') ? 'audio'
-      : 'file';
+        : file.type.startsWith('audio') ? 'audio'
+          : 'file';
     const url = URL.createObjectURL(file);
     setPreview({ type, url, file });
     e.target.value = '';
@@ -249,7 +248,7 @@ const Messaging = () => {
 
 // Renders the right content based on message type
 const MessageContent = ({ msg }) => {
-  const base = '';
+  const base = 'https://api.032403.xyz';
   const url = msg.media_url ? `${base}${msg.media_url}` : null;
 
   if (msg.msg_type === 'image' && url) {

@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import './MusicPlayer.css';
 
-const BASE = '';
+const BASE = 'https://api.032403.xyz';
 
 // Fallback tracks if none uploaded
 const FALLBACK = [

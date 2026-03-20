@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import axios from 'axios';
 import './CinematicPage.css';
 
-const BASE = '';
+const BASE = 'https://api.032403.xyz';
 
 // Fallback chapters if none in DB
 const FALLBACK_CHAPTERS = [

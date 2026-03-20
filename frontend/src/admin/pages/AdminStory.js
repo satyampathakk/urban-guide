@@ -3,7 +3,7 @@ import adminApi from '../adminApi';
 import { toast } from '../AdminApp';
 import AdminModal from '../AdminModal';
 
-const BASE = '';
+const BASE = 'https://api.032403.xyz';
 const EMPTY_CH = { title: '', subtitle: '', emoji: '💕', video_url: '', sort_order: 0 };
 const EMPTY_SL = { chapter_id: '', slide_type: 'memory', title: '', caption: '', media_url: '', sort_order: 0 };
 
