@@ -26,7 +26,8 @@ const MORE = [
   { path: '/game',       label: 'Mini Game',   icon: '🎮' },
   { path: '/match',      label: 'Memory Match',icon: '💖' },
   { path: '/wheel',      label: 'Photo Wheel', icon: '💿' },
-  { path: '/voice',      label: 'Voice Capsule', icon: 'VC' },
+  { path: '/voice',      label: 'Voice Capsule', icon: '🎙️' },
+  { path: '/videos',     label: 'Videos',        icon: '🎬' },
   { path: '/secrets',    label: 'Secrets',     icon: '🔐' },
   { path: '/timelocked', label: 'Letters',     icon: '⏳' },
 ];

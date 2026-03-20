@@ -426,6 +426,25 @@ async def get_timeline():
     return [{"id":r[0],"title":r[1],"description":r[2],"event_date":r[3],
              "emoji":r[4],"media_url":r[5] or "","sort_order":r[6]} for r in rows]
 
+@app.get("/api/story/chapters")
+async def get_story_chapters():
+    conn = sqlite3.connect('romantic_app.db')
+    cursor = conn.cursor()
+    cursor.execute("SELECT id,title,subtitle,emoji,video_url,sort_order FROM story_chapters ORDER BY sort_order")
+    rows = cursor.fetchall()
+    conn.close()
+    return [{"id":r[0],"title":r[1],"subtitle":r[2],"emoji":r[3],"video_url":r[4] or "","sort_order":r[5]} for r in rows]
+
+@app.get("/api/story/slides")
+async def get_story_slides():
+    conn = sqlite3.connect('romantic_app.db')
+    cursor = conn.cursor()
+    cursor.execute("SELECT id,chapter_id,slide_type,title,caption,media_url,sort_order FROM story_slides ORDER BY chapter_id,sort_order")
+    rows = cursor.fetchall()
+    conn.close()
+    return [{"id":r[0],"chapter_id":r[1],"slide_type":r[2],"title":r[3],
+             "caption":r[4],"media_url":r[5] or "","sort_order":r[6]} for r in rows]
+
 if __name__ == "__main__":
     import uvicorn
     uvicorn.run(app, host="0.0.0.0", port=9000)

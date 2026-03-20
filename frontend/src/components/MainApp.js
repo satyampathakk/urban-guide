@@ -13,6 +13,7 @@ import MemoryMatchPage from '../pages/MemoryMatchPage';
 import CinematicPage from '../pages/CinematicPage';
 import PhotoWheelPage from '../pages/PhotoWheelPage';
 import VoiceCapsulePage from '../pages/VoiceCapsulePage';
+import VideosPage from '../pages/VideosPage';
 import './MainApp.css';
 
 const MainApp = () => {
@@ -34,6 +35,7 @@ const MainApp = () => {
           <Route path="/match"      element={<MemoryMatchPage />} />
           <Route path="/wheel"      element={<PhotoWheelPage />} />
           <Route path="/voice"      element={<VoiceCapsulePage />} />
+          <Route path="/videos"     element={<VideosPage />} />
           <Route path="*"           element={<Navigate to="/memories" replace />} />
         </Routes>
       </main>

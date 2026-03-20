@@ -4,22 +4,6 @@ import axios from 'axios';
 import { mediaUrl } from '../utils/mediaUrl';
 import './CinematicPage.css';
 
-// Fallback chapters if none in DB
-const FALLBACK_CHAPTERS = [
-  { id: 1, title: 'Chapter 1', subtitle: 'How It Started', emoji: '🌱', sort_order: 0 },
-  { id: 2, title: 'Chapter 2', subtitle: 'Our Moments', emoji: '💕', sort_order: 1 },
-  { id: 3, title: 'Chapter 3', subtitle: 'Today & Always', emoji: '🌟', sort_order: 2 },
-];
-
-const FALLBACK_MEMORIES = [
-  { id: 1, title: 'The First Hello', caption: 'Everything changed in that one moment.', image_url: '', chapter_id: 1 },
-  { id: 2, title: 'First Valentine\'s', caption: 'Roses, candlelight, and a feeling I\'d never felt.', image_url: '', chapter_id: 1 },
-  { id: 3, title: 'Our First Trip', caption: 'We got lost on purpose and found something beautiful.', image_url: '', chapter_id: 2 },
-  { id: 4, title: 'Said I Love You', caption: 'Three words. A thousand feelings.', image_url: '', chapter_id: 2 },
-  { id: 5, title: 'Beach Sunset', caption: 'Walking hand in hand as the sun painted the sky.', image_url: '', chapter_id: 3 },
-  { id: 6, title: 'Today', caption: 'Still falling. Still grateful. Still yours.', image_url: '', chapter_id: 3 },
-];
-
 export default function CinematicPage() {
   const [chapters, setChapters] = useState([]);
   const [slides, setSlides] = useState([]);
@@ -31,16 +15,13 @@ export default function CinematicPage() {
 
   useEffect(() => {
     Promise.all([
-      axios.get('/admin/story/chapters').catch(() => ({ data: [] })),
-      axios.get('/admin/story/slides').catch(() => ({ data: [] })),
+      axios.get('/api/story/chapters').catch(() => ({ data: [] })),
+      axios.get('/api/story/slides').catch(() => ({ data: [] })),
       axios.get('/api/memories').catch(() => ({ data: [] })),
     ]).then(([ch, sl, mem]) => {
-      const chs = ch.data.length ? ch.data : FALLBACK_CHAPTERS;
-      const sls = sl.data;
-      const mems = mem.data.length ? mem.data : FALLBACK_MEMORIES;
-      setChapters(chs);
-      setSlides(sls);
-      setMemories(mems);
+      setChapters(ch.data);
+      setSlides(sl.data);
+      setMemories(mem.data);
     });
   }, []);
 
@@ -118,21 +99,30 @@ export default function CinematicPage() {
           <div className="cinematic-icon">🎬</div>
           <h1 className="cinematic-start-title">Our Story</h1>
           <p className="cinematic-start-sub">A cinematic journey through our memories</p>
-          <div className="chapter-preview">
-            {chapters.slice(0, 5).map((ch, i) => (
-              <div key={i} className="chapter-preview-item">
-                <span>{ch.emoji}</span>
-                <div>
-                  <div className="cp-title">{ch.title}</div>
-                  <div className="cp-sub">{ch.subtitle}</div>
-                </div>
+
+          {chapters.length === 0 ? (
+            <p style={{ color: 'rgba(255,255,255,0.5)', fontSize: '0.9rem', fontStyle: 'italic', margin: '20px 0' }}>
+              No story chapters yet. Add them in the admin panel.
+            </p>
+          ) : (
+            <>
+              <div className="chapter-preview">
+                {chapters.slice(0, 5).map((ch, i) => (
+                  <div key={i} className="chapter-preview-item">
+                    <span>{ch.emoji}</span>
+                    <div>
+                      <div className="cp-title">{ch.title}</div>
+                      <div className="cp-sub">{ch.subtitle}</div>
+                    </div>
+                  </div>
+                ))}
               </div>
-            ))}
-          </div>
-          <motion.button className="cinematic-play-btn" onClick={start}
-            whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-            ▶ Play Our Story
-          </motion.button>
+              <motion.button className="cinematic-play-btn" onClick={start}
+                whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+                ▶ Play Our Story
+              </motion.button>
+            </>
+          )}
         </motion.div>
       </div>
     );
