@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import axios from 'axios';
+import { mediaUrl } from '../utils/mediaUrl';
 import './MagicWidgets.css';
 
 // ── Mystery Box ───────────────────────────────────────────────────────────────
@@ -124,7 +125,7 @@ export function RememberThisDay() {
           <span className="remember-label">Remember this day?</span>
         </div>
         {memory.image_url && (
-          <img src={memory.image_url} alt={memory.title} className="remember-img"
+          <img src={mediaUrl(memory.image_url)} alt={memory.title} className="remember-img"
             onError={e => { e.target.style.display = 'none'; }} />
         )}
         <p className="remember-title">{memory.title}</p>

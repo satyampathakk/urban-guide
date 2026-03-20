@@ -137,7 +137,7 @@ const VoiceCapsule = () => {
     <div className="vc-container">
       <motion.h1
         className="romantic-title section-title"
-        initial={{ y: -20 }}
+        initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
       >

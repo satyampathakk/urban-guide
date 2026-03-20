@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import axios from 'axios';
 import './Messaging.css';
 
 const API = 'https://api.032403.xyz';
@@ -40,10 +41,9 @@ const Messaging = () => {
     websocket.onclose = () => setIsConnected(false);
     websocket.onerror = () => setIsConnected(false);
 
-    fetch('/api/messages')
-      .then(r => r.json())
-      .then(data => setMessages(data))
-      .catch(() => { });
+    axios.get('/api/messages')
+      .then(r => setMessages(r.data))
+      .catch(() => {});
 
     return () => websocket.close();
   }, []);

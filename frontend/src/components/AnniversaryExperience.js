@@ -2,6 +2,7 @@ import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { mediaUrl } from '../utils/mediaUrl';
 import './AnniversaryExperience.css';
 
 const REDIRECT_TARGET = '/cinematic';
@@ -112,10 +113,10 @@ export default function AnniversaryExperience() {
         >
           <div className="anniv-media">
             {mediaType === 'video' && event.media_url && (
-              <video src={event.media_url} autoPlay muted loop playsInline />
+              <video src={mediaUrl(event.media_url)} autoPlay muted loop playsInline />
             )}
             {mediaType === 'image' && event.media_url && (
-              <img src={event.media_url} alt={event.title} />
+              <img src={mediaUrl(event.media_url)} alt={event.title} />
             )}
             {!event.media_url && <div className="anniv-media-fallback">LOVE</div>}
           </div>
@@ -132,7 +133,7 @@ export default function AnniversaryExperience() {
 
             {event.music_url && (
               <div className="anniv-audio">
-                <audio ref={audioRef} src={event.music_url} controls loop />
+                <audio ref={audioRef} src={mediaUrl(event.music_url)} controls loop />
               </div>
             )}
 
