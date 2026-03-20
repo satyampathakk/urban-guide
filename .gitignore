@@ -1,2 +1,4 @@
 node_modules
-*/romantic_app.db
+*.db
+*.sqlite
+*.sqlite3
