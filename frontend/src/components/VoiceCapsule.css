@@ -1,0 +1,217 @@
+.vc-container {
+  padding: 40px 20px 60px;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.vc-subtitle {
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 1rem;
+  font-style: italic;
+  margin: -8px 0 28px;
+  text-align: center;
+}
+
+.vc-composer {
+  padding: 28px;
+  border-radius: 24px;
+  display: grid;
+  grid-template-columns: 1.2fr 0.8fr;
+  gap: 24px;
+  align-items: start;
+}
+
+.vc-form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.vc-label {
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.75);
+}
+
+.vc-textarea {
+  background: rgba(255, 255, 255, 0.9);
+  border: 2px solid transparent;
+  border-radius: 14px;
+  padding: 12px 16px;
+  font-size: 0.95rem;
+  outline: none;
+  transition: all 0.3s ease;
+  width: 100%;
+  resize: vertical;
+}
+
+.vc-textarea:focus {
+  border-color: var(--primary-pink);
+  box-shadow: 0 0 20px rgba(255, 105, 180, 0.3);
+}
+
+.vc-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 6px;
+}
+
+.vc-record-btn {
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 22px;
+  padding: 10px 18px;
+  color: rgba(255, 255, 255, 0.9);
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: all 0.2s;
+}
+
+.vc-record-btn:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.vc-record-btn.recording {
+  background: rgba(255, 80, 80, 0.25);
+  border-color: rgba(255, 80, 80, 0.45);
+  color: #ffd1d1;
+}
+
+.vc-clear-btn {
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 22px;
+  padding: 10px 16px;
+  color: rgba(255, 255, 255, 0.8);
+  cursor: pointer;
+}
+
+.vc-clear-btn:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.vc-error {
+  color: #ffcccb;
+  font-size: 0.85rem;
+  background: rgba(255, 0, 0, 0.08);
+  border: 1px solid rgba(255, 0, 0, 0.2);
+  border-radius: 10px;
+  padding: 8px 10px;
+}
+
+.vc-preview {
+  background: rgba(0, 0, 0, 0.25);
+  border-radius: 18px;
+  padding: 18px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.vc-preview audio {
+  width: 100%;
+}
+
+.vc-preview-title {
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.vc-preview-name {
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.65);
+}
+
+.vc-preview-empty {
+  color: rgba(255, 255, 255, 0.6);
+  font-style: italic;
+  min-height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.vc-list {
+  margin-top: 28px;
+}
+
+.vc-loading,
+.vc-empty {
+  text-align: center;
+  color: rgba(255, 255, 255, 0.7);
+  padding: 24px;
+}
+
+.vc-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 18px;
+}
+
+.vc-card {
+  padding: 20px 18px;
+  border-radius: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.vc-card-title {
+  font-family: 'Dancing Script', cursive;
+  font-size: 1.5rem;
+  color: #ff69b4;
+}
+
+.vc-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.vc-delete-btn {
+  background: rgba(255, 80, 80, 0.12);
+  border: 1px solid rgba(255, 80, 80, 0.25);
+  border-radius: 8px;
+  padding: 4px 8px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  color: #ff8080;
+  transition: background 0.2s, transform 0.15s;
+  flex-shrink: 0;
+}
+
+.vc-delete-btn:hover {
+  background: rgba(255, 80, 80, 0.28);
+  transform: scale(1.1);
+}
+
+.vc-card-note {
+  color: rgba(255, 255, 255, 0.85);
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+.vc-card-date {
+  font-size: 0.8rem;
+  color: rgba(255, 255, 255, 0.55);
+}
+
+.vc-card audio {
+  width: 100%;
+  margin-top: 6px;
+}
+
+@media (max-width: 900px) {
+  .vc-composer {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 600px) {
+  .vc-container {
+    padding: 24px 12px 40px;
+  }
+}

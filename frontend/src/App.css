@@ -1,0 +1,167 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Poppins', sans-serif;
+  background: #020208;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+body.anniversary-mode {
+  background: #080411;
+}
+
+body.anniversary-mode::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at 20% 20%, rgba(255, 105, 180, 0.22), transparent 50%),
+    radial-gradient(circle at 80% 30%, rgba(255, 215, 0, 0.18), transparent 55%),
+    radial-gradient(circle at 50% 80%, rgba(186, 85, 211, 0.18), transparent 55%);
+  animation: anniversary-glow 8s ease-in-out infinite alternate;
+}
+
+@keyframes anniversary-glow {
+  0%   { opacity: 0.55; }
+  100% { opacity: 0.9; }
+}
+
+.App {
+  min-height: 100vh;
+  position: relative;
+  z-index: 2;
+  isolation: isolate;
+}
+
+/* Romantic color palette */
+:root {
+  --primary-pink: #ff69b4;
+  --soft-pink: #ffb6c1;
+  --lavender: #e6e6fa;
+  --deep-purple: #663399;
+  --warm-white: #fef7f0;
+  --gold: #ffd700;
+  --rose-gold: #e8b4b8;
+}
+
+/* Typography */
+.romantic-title {
+  font-family: 'Dancing Script', cursive;
+  font-weight: 600;
+  display: block;
+  line-height: 1.2;
+}
+
+/* Section headings — solid color, always visible */
+.section-title {
+  font-size: 2.8rem;
+  font-weight: 700;
+  margin-bottom: 32px;
+  display: block;
+  line-height: 1.2;
+  color: #ff69b4;
+  text-shadow: 0 0 30px rgba(255, 105, 180, 0.4);
+}
+
+/* Timeline heading keeps its own gradient — defined in TimelinePage.css */
+
+@media (max-width: 768px) {
+  .section-title { font-size: 2rem; }
+}
+
+.elegant-text {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 300;
+  color: var(--warm-white);
+  line-height: 1.6;
+}
+
+/* Animations */
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-20px); }
+}
+
+@keyframes sparkle {
+  0%, 100% { opacity: 0; transform: scale(0); }
+  50% { opacity: 1; transform: scale(1); }
+}
+
+@keyframes heartbeat {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+}
+
+.floating {
+  animation: float 3s ease-in-out infinite;
+}
+
+.sparkle {
+  animation: sparkle 2s ease-in-out infinite;
+}
+
+.heartbeat {
+  animation: heartbeat 1.5s ease-in-out infinite;
+}
+
+/* Glassmorphism effect */
+.glass {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border-radius: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+}
+
+/* Button styles */
+.romantic-button {
+  background: linear-gradient(45deg, var(--primary-pink), var(--soft-pink));
+  border: none;
+  border-radius: 25px;
+  padding: 12px 30px;
+  color: white;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(255, 105, 180, 0.3);
+}
+
+.romantic-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(255, 105, 180, 0.4);
+}
+
+/* Input styles */
+.romantic-input {
+  background: rgba(255, 255, 255, 0.9);
+  border: 2px solid transparent;
+  border-radius: 15px;
+  padding: 15px 20px;
+  font-size: 16px;
+  outline: none;
+  transition: all 0.3s ease;
+  width: 100%;
+}
+
+.romantic-input:focus {
+  border-color: var(--primary-pink);
+  box-shadow: 0 0 20px rgba(255, 105, 180, 0.3);
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .romantic-title {
+    font-size: 2rem;
+  }
+  
+  .elegant-text {
+    font-size: 0.9rem;
+  }
+}

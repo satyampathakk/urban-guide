@@ -1,0 +1,115 @@
+.anniv-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1200;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(5, 5, 15, 0.92);
+  backdrop-filter: blur(6px);
+  padding: 24px;
+}
+
+.anniv-media {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  z-index: 1;
+}
+
+.anniv-media::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at center, rgba(255, 105, 180, 0.25), rgba(5, 5, 15, 0.9));
+}
+
+.anniv-media img,
+.anniv-media video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.45;
+}
+
+.anniv-media-fallback {
+  width: 100%;
+  height: 100%;
+  display: grid;
+  place-items: center;
+  font-size: 6rem;
+  opacity: 0.35;
+}
+
+.anniv-card {
+  position: relative;
+  z-index: 2;
+  max-width: 620px;
+  width: 100%;
+  padding: 36px 32px;
+  border-radius: 26px;
+  text-align: center;
+  background: rgba(12, 8, 25, 0.78) !important;
+  border: 1px solid rgba(255, 105, 180, 0.3) !important;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.55);
+}
+
+.anniv-badge {
+  display: inline-block;
+  padding: 6px 14px;
+  border-radius: 999px;
+  background: rgba(255, 105, 180, 0.2);
+  color: #ffb6c1;
+  font-size: 0.78rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-bottom: 16px;
+}
+
+.anniv-title {
+  font-family: 'Dancing Script', cursive;
+  font-size: 2.8rem;
+  color: #ffd1e6;
+  text-shadow: 0 0 25px rgba(255, 105, 180, 0.6);
+  margin-bottom: 12px;
+}
+
+.anniv-message {
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 1.05rem;
+  line-height: 1.7;
+  margin-bottom: 20px;
+  white-space: pre-line;
+}
+
+.anniv-audio {
+  margin: 16px 0 10px;
+}
+
+.anniv-audio audio {
+  width: 100%;
+}
+
+.anniv-actions {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.anniv-countdown {
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.6);
+  font-style: italic;
+}
+
+@media (max-width: 600px) {
+  .anniv-card {
+    padding: 28px 20px;
+  }
+
+  .anniv-title {
+    font-size: 2.2rem;
+  }
+}

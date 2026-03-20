@@ -1,0 +1,359 @@
+.universe-page {
+  position: relative;
+  width: 100%;
+  min-height: calc(100vh - 74px);
+  background: transparent;
+  overflow: hidden;
+}
+
+.universe-canvas { display: none; }
+.nebula { display: none; }
+.shooting-star { display: none; }
+
+/* ── Header ── */
+.universe-header {
+  position: absolute;
+  top: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
+  z-index: 10;
+  pointer-events: none;
+}
+
+.universe-title {
+  font-family: 'Dancing Script', cursive;
+  font-size: 2.8rem;
+  color: white;
+  text-shadow: 0 0 40px rgba(255, 105, 180, 0.9), 0 0 80px rgba(255, 105, 180, 0.4);
+  margin-bottom: 6px;
+}
+
+.universe-subtitle {
+  font-size: 0.88rem;
+  color: rgba(255, 255, 255, 0.5);
+  font-style: italic;
+  letter-spacing: 0.3px;
+}
+
+/* ── Memory stars ── */
+.memory-star {
+  position: absolute;
+  border-radius: 50%;
+  border: none;
+  cursor: pointer;
+  z-index: 8;
+  transform: translate(-50%, -50%);
+  /* Multi-layer glow: white core → gold halo */
+  background: radial-gradient(circle at 40% 35%,
+    #ffffff 0%,
+    #fffbe0 25%,
+    #ffd700 55%,
+    rgba(255, 200, 0, 0.15) 80%,
+    transparent 100%
+  );
+  box-shadow:
+    0 0 6px 2px rgba(255, 230, 80, 0.7),
+    0 0 18px 4px rgba(255, 200, 0, 0.3);
+  transition: box-shadow 0.25s, transform 0.25s;
+}
+
+.memory-star:hover {
+  box-shadow:
+    0 0 10px 4px rgba(255, 240, 100, 0.9),
+    0 0 30px 10px rgba(255, 200, 0, 0.5),
+    0 0 60px 20px rgba(255, 180, 0, 0.2);
+}
+
+/* Pulsing aura ring */
+.star-glow {
+  position: absolute;
+  inset: -8px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255, 220, 60, 0.25), transparent 70%);
+  animation: star-pulse 2.8s ease-in-out infinite;
+}
+
+@keyframes star-pulse {
+  0%, 100% { transform: scale(1);   opacity: 0.5; }
+  50%       { transform: scale(1.7); opacity: 1;   }
+}
+
+/* Label tooltip */
+.star-label {
+  position: absolute;
+  top: calc(100% + 10px);
+  left: 50%;
+  transform: translateX(-50%);
+  white-space: nowrap;
+  font-size: 0.72rem;
+  font-family: 'Poppins', sans-serif;
+  color: #fff;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.2s;
+  background: rgba(5, 5, 20, 0.82);
+  border: 1px solid rgba(255, 215, 0, 0.3);
+  padding: 3px 9px;
+  border-radius: 20px;
+  backdrop-filter: blur(6px);
+  letter-spacing: 0.2px;
+}
+
+.memory-star:hover .star-label { opacity: 1; }
+
+/* Active star — pink supernova */
+.memory-star.star-active {
+  background: radial-gradient(circle at 40% 35%,
+    #ffffff 0%,
+    #ffcce8 25%,
+    #ff69b4 55%,
+    rgba(255, 105, 180, 0.15) 80%,
+    transparent 100%
+  );
+  box-shadow:
+    0 0 10px 4px rgba(255, 105, 180, 0.9),
+    0 0 30px 10px rgba(255, 105, 180, 0.5),
+    0 0 70px 24px rgba(255, 105, 180, 0.2);
+  z-index: 12;
+}
+
+.memory-star.star-active .star-glow {
+  background: radial-gradient(circle, rgba(255, 105, 180, 0.35), transparent 70%);
+  animation: star-pulse-active 1.8s ease-in-out infinite;
+}
+
+@keyframes star-pulse-active {
+  0%, 100% { transform: scale(1);   opacity: 0.7; }
+  50%       { transform: scale(2.2); opacity: 1;   }
+}
+
+/* Constellation SVG */
+.constellation-svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 7;
+}
+
+/* ── Wooden box anchor ── */
+.uv-box-anchor {
+  position: absolute;
+  top: 88px;
+  right: 36px;
+  z-index: 20;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+/* ── Wooden frame ── */
+.uv-wooden-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.uv-frame {
+  position: relative;
+  width: 300px;
+  height: 300px;
+  /* Rich wood grain */
+  background:
+    repeating-linear-gradient(
+      88deg,
+      transparent 0px, transparent 3px,
+      rgba(0,0,0,0.06) 3px, rgba(0,0,0,0.06) 5px
+    ),
+    repeating-linear-gradient(
+      180deg,
+      rgba(255,200,120,0.04) 0px, rgba(255,200,120,0.04) 8px,
+      transparent 8px, transparent 16px
+    ),
+    linear-gradient(175deg, #4a3020 0%, #2e1a0a 30%, #3d2510 60%, #1e0e04 100%);
+  border-radius: 14px;
+  padding: 20px;
+  border: 5px solid #120800;
+  outline: 2px solid rgba(255, 170, 80, 0.18);
+  box-shadow:
+    0 30px 80px rgba(0, 0, 0, 0.85),
+    0 8px 20px rgba(0, 0, 0, 0.6),
+    inset 0 3px 6px rgba(255, 210, 140, 0.2),
+    inset 0 -4px 8px rgba(0, 0, 0, 0.5),
+    inset 4px 0 8px rgba(255, 200, 120, 0.1),
+    inset -4px 0 8px rgba(0, 0, 0, 0.4);
+}
+
+/* Brass nameplate at top */
+.uv-frame::before {
+  content: '✦ memories ✦';
+  position: absolute;
+  top: -1px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: linear-gradient(90deg, #8a6a30, #d4a843, #c49030, #d4a843, #8a6a30);
+  color: #2a1a00;
+  font-size: 0.6rem;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  padding: 3px 16px;
+  border-radius: 0 0 8px 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.5);
+  z-index: 10;
+}
+
+.uv-notch {
+  display: none; /* replaced by ::before nameplate */
+}
+
+/* Inner display */
+.uv-display {
+  width: 100%;
+  height: 100%;
+  border-radius: 6px;
+  overflow: hidden;
+  background: #050508;
+  position: relative;
+  box-shadow: inset 0 0 20px rgba(0,0,0,0.8);
+}
+
+.uv-layer {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.uv-layer-top { z-index: 2; }
+
+.uv-box-img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center;
+  display: block;
+}
+
+.uv-box-emoji {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 4.5rem;
+}
+
+/* Seam lines */
+.uv-seam-h {
+  position: absolute;
+  top: 50%;
+  left: 0; right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, transparent, #120800 20%, #120800 80%, transparent);
+  transform: translateY(-50%);
+  z-index: 8;
+  pointer-events: none;
+}
+
+.uv-seam-v {
+  position: absolute;
+  left: 50%;
+  top: 0; bottom: 0;
+  width: 3px;
+  background: linear-gradient(180deg, transparent, #120800 20%, #120800 80%, transparent);
+  transform: translateX(-50%);
+  z-index: 8;
+  pointer-events: none;
+}
+
+/* Screws */
+.uv-screw {
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%, #c8a060, #6a4010, #2a1005);
+  box-shadow:
+    inset 0 1px 3px rgba(0,0,0,0.7),
+    inset 0 -1px 2px rgba(255,200,100,0.2),
+    0 1px 2px rgba(255,180,80,0.3);
+  z-index: 9;
+}
+
+.uv-screw::after {
+  content: '';
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%,-50%) rotate(45deg);
+  width: 7px; height: 1.5px;
+  background: rgba(0,0,0,0.6);
+  border-radius: 1px;
+}
+
+.uv-screw::before {
+  content: '';
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%,-50%) rotate(-45deg);
+  width: 7px; height: 1.5px;
+  background: rgba(0,0,0,0.6);
+  border-radius: 1px;
+}
+
+.uv-screw-tl { top: 8px;    left: 8px;  }
+.uv-screw-tr { top: 8px;    right: 8px; }
+.uv-screw-bl { bottom: 8px; left: 8px;  }
+.uv-screw-br { bottom: 8px; right: 8px; }
+
+/* ── Info below box ── */
+.uv-box-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  max-width: 300px;
+}
+
+.uv-box-label {
+  font-family: 'Dancing Script', cursive;
+  font-size: 1.2rem;
+  color: #fff;
+  text-align: center;
+  text-shadow: 0 0 16px rgba(255, 105, 180, 0.6);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 300px;
+}
+
+.uv-box-caption {
+  font-size: 0.78rem;
+  color: rgba(255, 255, 255, 0.45);
+  font-style: italic;
+  text-align: center;
+  line-height: 1.5;
+  max-width: 280px;
+}
+
+/* ── Mobile ── */
+@media (max-width: 900px) {
+  .uv-box-anchor {
+    top: auto;
+    bottom: 20px;
+    right: 50%;
+    transform: translateX(50%);
+  }
+
+  .uv-frame {
+    width: 200px;
+    height: 200px;
+    padding: 14px;
+  }
+
+  .uv-box-label { font-size: 1rem; }
+}

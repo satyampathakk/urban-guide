@@ -1,0 +1,254 @@
+.cinematic-start {
+  min-height: calc(100vh - 74px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.cinematic-start-card {
+  max-width: 480px;
+  width: 100%;
+  padding: 48px 36px;
+  border-radius: 24px;
+  text-align: center;
+}
+
+.cinematic-icon { font-size: 3rem; margin-bottom: 12px; }
+
+.cinematic-start-title {
+  font-family: 'Dancing Script', cursive;
+  font-size: 2.8rem;
+  font-weight: 700;
+  color: #ff69b4;
+  text-shadow: 0 0 30px rgba(255, 105, 180, 0.4);
+  margin-bottom: 8px;
+  display: block;
+}
+
+.cinematic-start-sub {
+  color: rgba(255,255,255,0.65);
+  font-size: 0.95rem;
+  font-style: italic;
+  margin-bottom: 28px;
+}
+
+.chapter-preview {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 28px;
+  text-align: left;
+}
+
+.chapter-preview-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: rgba(255,255,255,0.06);
+  border-radius: 10px;
+  padding: 10px 14px;
+  font-size: 1.2rem;
+}
+
+.cp-title { font-size: 0.88rem; font-weight: 600; color: rgba(255,255,255,0.9); }
+.cp-sub   { font-size: 0.78rem; color: rgba(255,255,255,0.5); }
+
+.cinematic-play-btn {
+  background: linear-gradient(45deg, #ff69b4, #ffd700);
+  border: none;
+  border-radius: 25px;
+  padding: 14px 36px;
+  color: white;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: inherit;
+  box-shadow: 0 4px 20px rgba(255,105,180,0.4);
+}
+
+/* ── Player ── */
+.cinematic-player {
+  position: fixed;
+  inset: 0;
+  background: #000;
+  z-index: 500;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cinematic-progress {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: rgba(255,255,255,0.15);
+  z-index: 10;
+}
+
+.cinematic-progress-fill {
+  height: 100%;
+  background: linear-gradient(to right, #ff69b4, #ffd700);
+}
+
+.cinematic-controls {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  display: flex;
+  gap: 8px;
+  z-index: 10;
+}
+
+.cin-ctrl-btn {
+  background: rgba(255,255,255,0.12);
+  border: none;
+  border-radius: 8px;
+  color: white;
+  width: 36px;
+  height: 36px;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.cin-ctrl-btn:hover { background: rgba(255,255,255,0.22); }
+.cin-ctrl-btn:disabled { opacity: 0.3; cursor: default; }
+
+.cinematic-slide {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+/* Chapter slide */
+.chapter-slide {
+  background: radial-gradient(ellipse at center, rgba(255,105,180,0.15) 0%, #000 70%);
+}
+
+.chapter-emoji { font-size: 4rem; margin-bottom: 16px; }
+
+.chapter-title {
+  font-family: 'Dancing Script', cursive;
+  font-size: 3.5rem;
+  color: white;
+  text-shadow: 0 0 40px rgba(255,105,180,0.6);
+  margin-bottom: 8px;
+}
+
+.chapter-subtitle {
+  font-size: 1.2rem;
+  color: rgba(255,255,255,0.6);
+  font-style: italic;
+}
+
+/* Memory slide */
+.cinematic-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.6;
+}
+
+.cinematic-img-placeholder {
+  font-size: 8rem;
+  opacity: 0.3;
+}
+
+.cinematic-text-overlay {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  padding: 0 40px;
+  max-width: 700px;
+}
+
+.cinematic-memory-title {
+  font-family: 'Dancing Script', cursive;
+  font-size: 3rem;
+  color: white;
+  text-shadow: 0 2px 20px rgba(0,0,0,0.8);
+  margin-bottom: 16px;
+}
+
+.cinematic-memory-caption {
+  font-size: 1.2rem;
+  color: rgba(255,255,255,0.85);
+  font-style: italic;
+  line-height: 1.7;
+  text-shadow: 0 1px 10px rgba(0,0,0,0.9);
+}
+
+/* End slide */
+.end-slide {
+  background: radial-gradient(ellipse at center, rgba(255,105,180,0.2) 0%, #000 70%);
+  gap: 16px;
+}
+
+.end-hearts { font-size: 5rem; }
+
+.end-title {
+  font-family: 'Dancing Script', cursive;
+  font-size: 3rem;
+  color: white;
+  text-shadow: 0 0 30px rgba(255,105,180,0.5);
+}
+
+.end-sub {
+  font-size: 1.1rem;
+  color: rgba(255,255,255,0.6);
+  font-style: italic;
+  margin-bottom: 8px;
+}
+
+.cinematic-hint {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 0.78rem;
+  color: rgba(255,255,255,0.3);
+  pointer-events: none;
+}
+
+/* Video slide */
+.video-slide {
+  background: #000;
+  cursor: default;
+}
+
+.cinematic-video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  background: #000;
+}
+
+/* Chapter background video */
+.chapter-bg-video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.45;
+  pointer-events: none;
+}
+
+.chapter-slide-content {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}

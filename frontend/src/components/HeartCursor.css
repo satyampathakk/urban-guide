@@ -1,0 +1,14 @@
+.cursor-heart {
+  position: fixed;
+  pointer-events: none;
+  font-size: 1rem;
+  z-index: 9999;
+  transform: translate(-50%, -50%);
+  animation: heart-trail 0.9s ease-out forwards;
+  user-select: none;
+}
+
+@keyframes heart-trail {
+  0%   { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+  100% { opacity: 0; transform: translate(-50%, -120%) scale(0.4); }
+}

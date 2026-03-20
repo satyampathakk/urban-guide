@@ -1,0 +1,43 @@
+.floating-elements {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.floating-heart {
+  position: absolute;
+  font-size: 2rem;
+  user-select: none;
+  filter: drop-shadow(0 0 10px rgba(255, 105, 180, 0.5));
+}
+
+.floating-sparkle {
+  position: absolute;
+  font-size: 1.5rem;
+  user-select: none;
+  filter: drop-shadow(0 0 8px rgba(255, 215, 0, 0.7));
+}
+
+.particles {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+
+.particle {
+  position: absolute;
+  width: 3px;
+  height: 3px;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.8) 0%, transparent 70%);
+  border-radius: 50%;
+  filter: blur(0.5px);
+}
+
+/* Remove the aurora overlay — StarBackground handles the ambient glow */
+.floating-elements::before {
+  display: none;
+}

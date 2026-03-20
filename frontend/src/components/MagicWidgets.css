@@ -1,0 +1,163 @@
+/* ── Mystery Box ── */
+.mystery-box-wrap { display: inline-block; }
+
+.mystery-box-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 18px;
+  border-radius: 20px;
+  border: none;
+  cursor: pointer;
+  font-family: inherit;
+  transition: all 0.2s;
+}
+
+.mystery-box-icon { font-size: 1.3rem; }
+.mystery-box-label { font-size: 0.88rem; color: rgba(255,255,255,0.85); }
+
+.mystery-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 20px;
+}
+
+.mystery-reveal {
+  max-width: 400px;
+  width: 100%;
+  padding: 48px 36px;
+  border-radius: 24px;
+  text-align: center;
+  position: relative;
+}
+
+.mystery-sparkle {
+  font-size: 2rem;
+  display: inline-block;
+  margin-bottom: 16px;
+}
+
+.mystery-emoji-burst {
+  font-size: 2rem;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+  margin-bottom: 24px;
+}
+
+.mystery-note {
+  font-family: 'Dancing Script', cursive;
+  font-size: 1.4rem;
+  color: rgba(255,255,255,0.95);
+  line-height: 1.7;
+  margin-bottom: 24px;
+}
+
+.mystery-close-btn {
+  background: linear-gradient(45deg, #ff69b4, #ffb6c1);
+  border: none;
+  border-radius: 20px;
+  padding: 10px 24px;
+  color: white;
+  font-size: 0.9rem;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+/* ── Remember This Day ── */
+.remember-popup {
+  position: fixed;
+  bottom: 100px;
+  left: 24px;
+  max-width: 280px;
+  padding: 16px;
+  border-radius: 16px;
+  z-index: 300;
+}
+
+.remember-close {
+  position: absolute;
+  top: 8px;
+  right: 10px;
+  background: none;
+  border: none;
+  color: rgba(255,255,255,0.5);
+  cursor: pointer;
+  font-size: 0.85rem;
+}
+
+.remember-header {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 10px;
+}
+
+.remember-icon { font-size: 1.1rem; }
+.remember-label { font-size: 0.78rem; color: rgba(255,255,255,0.6); font-style: italic; }
+
+.remember-img {
+  width: 100%;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 10px;
+  margin-bottom: 8px;
+}
+
+.remember-title {
+  font-family: 'Dancing Script', cursive;
+  font-size: 1.1rem;
+  color: #ff69b4;
+  margin-bottom: 4px;
+}
+
+.remember-caption {
+  font-size: 0.82rem;
+  color: rgba(255,255,255,0.75);
+  font-style: italic;
+  line-height: 1.4;
+  margin-bottom: 4px;
+}
+
+.remember-date {
+  font-size: 0.75rem;
+  color: rgba(255,255,255,0.4);
+}
+
+/* ── Countdown ── */
+.countdown-widget {
+  padding: 14px 18px;
+  border-radius: 14px;
+  min-width: 200px;
+}
+
+.countdown-header {
+  font-size: 0.8rem;
+  color: rgba(255,255,255,0.6);
+  margin-bottom: 10px;
+  font-weight: 500;
+}
+
+.countdown-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 8px;
+}
+
+.countdown-emoji { font-size: 1.1rem; }
+
+.countdown-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.countdown-label { font-size: 0.82rem; color: rgba(255,255,255,0.85); }
+.countdown-time  { font-size: 0.78rem; color: #ffd700; font-weight: 600; }

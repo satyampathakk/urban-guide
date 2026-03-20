@@ -1,0 +1,101 @@
+.mood-fab {
+  position: fixed;
+  right: 24px;
+  bottom: 160px;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.15);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255,255,255,0.25);
+  font-size: 1.4rem;
+  cursor: pointer;
+  z-index: 200;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+}
+
+.mood-picker {
+  position: fixed;
+  right: 80px;
+  bottom: 155px;
+  z-index: 201;
+  padding: 16px;
+  border-radius: 16px;
+  min-width: 200px;
+}
+
+.mood-picker-title {
+  font-size: 0.82rem;
+  color: rgba(255,255,255,0.7);
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+.mood-options {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.mood-option {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 10px;
+  padding: 8px 12px;
+  color: rgba(255,255,255,0.85);
+  cursor: pointer;
+  font-size: 0.88rem;
+  transition: all 0.2s;
+  font-family: inherit;
+}
+
+.mood-option:hover,
+.mood-option.active {
+  background: rgba(255,105,180,0.25);
+  border-color: rgba(255,105,180,0.4);
+  color: white;
+}
+
+.mood-emoji { font-size: 1.1rem; }
+.mood-label-text { font-size: 0.85rem; }
+
+.mood-message {
+  position: fixed;
+  right: 80px;
+  bottom: 160px;
+  z-index: 201;
+  padding: 14px 18px;
+  border-radius: 14px;
+  max-width: 260px;
+  font-size: 0.9rem;
+  color: rgba(255,255,255,0.95);
+  font-style: italic;
+  line-height: 1.5;
+}
+
+.time-greeting {
+  position: fixed;
+  top: 68px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(255,255,255,0.12);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255,255,255,0.2);
+  border-radius: 30px;
+  padding: 8px 20px;
+  font-size: 0.85rem;
+  color: rgba(255,255,255,0.9);
+  z-index: 150;
+  white-space: nowrap;
+  font-style: italic;
+  pointer-events: none;
+}
+
+@media (max-width: 600px) {
+  .mood-picker { right: 10px; bottom: 150px; }
+  .mood-message { right: 10px; max-width: 220px; }
+  .time-greeting { font-size: 0.78rem; padding: 8px 16px; }
+}

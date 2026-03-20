@@ -1,0 +1,31 @@
+.main-app {
+  min-height: 100vh;
+  position: relative;
+  background: transparent;
+  z-index: 2;
+}
+
+.app-background {
+  display: none; /* replaced by global StarBackground */
+}
+
+.app-content {
+  position: relative;
+  z-index: 10;
+  padding: 20px 20px 60px;
+  padding-top: 74px;
+  min-height: 100vh;
+}
+
+.section-content {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+  .app-content {
+    padding: 12px 12px 40px;
+    padding-top: 64px;
+  }
+}

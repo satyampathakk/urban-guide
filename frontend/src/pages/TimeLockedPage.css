@@ -1,0 +1,157 @@
+.tl-page {
+  padding: 40px 20px 80px;
+  max-width: 900px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.tl-loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 300px;
+  font-size: 3rem;
+}
+
+.tl-heading {
+  font-family: 'Dancing Script', cursive;
+  font-size: 3rem;
+  font-weight: 700;
+  color: #ff69b4;
+  text-shadow: 0 0 30px rgba(255, 105, 180, 0.4);
+  margin-bottom: 8px;
+  display: block;
+}
+
+.tl-subtitle {
+  color: rgba(255,255,255,0.7);
+  font-size: 1rem;
+  font-style: italic;
+  margin-bottom: 40px;
+}
+
+.tl-section { margin-bottom: 40px; }
+
+.tl-section-title {
+  font-family: 'Dancing Script', cursive;
+  font-size: 1.8rem;
+  color: #ffb6c1;
+  margin-bottom: 20px;
+  text-align: left;
+}
+
+.tl-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 20px;
+}
+
+.tl-card {
+  padding: 28px 22px;
+  border-radius: 20px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.3s;
+  position: relative;
+}
+
+.tl-card.locked {
+  opacity: 0.7;
+  cursor: default;
+  filter: grayscale(0.3);
+}
+
+.tl-card-icon { font-size: 2.5rem; margin-bottom: 12px; }
+
+.tl-card-title {
+  font-family: 'Dancing Script', cursive;
+  font-size: 1.3rem;
+  color: #ff69b4;
+  margin-bottom: 8px;
+}
+
+.tl-card-date {
+  font-size: 0.8rem;
+  color: rgba(255,255,255,0.6);
+  margin-bottom: 8px;
+}
+
+.tl-countdown {
+  font-size: 0.85rem;
+  color: #ffd700;
+  font-weight: 500;
+}
+
+.tl-badge {
+  display: inline-block;
+  background: linear-gradient(45deg, #ff69b4, #c471ed);
+  color: white;
+  font-size: 0.75rem;
+  padding: 3px 10px;
+  border-radius: 12px;
+  margin-top: 8px;
+}
+
+.tl-badge.locked-badge {
+  background: rgba(255,255,255,0.15);
+}
+
+.tl-read-more {
+  font-size: 0.8rem;
+  color: rgba(255,255,255,0.5);
+  margin-top: 10px;
+  font-style: italic;
+}
+
+/* Modal */
+.tl-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 20px;
+}
+
+.tl-modal {
+  max-width: 520px;
+  width: 100%;
+  padding: 50px 40px;
+  border-radius: 25px;
+  text-align: center;
+}
+
+.tl-modal-icon { font-size: 3rem; margin-bottom: 15px; }
+
+.tl-modal-title {
+  font-family: 'Dancing Script', cursive;
+  font-size: 2rem;
+  color: #ff69b4;
+  margin-bottom: 8px;
+}
+
+.tl-modal-date {
+  font-size: 0.85rem;
+  color: rgba(255,255,255,0.6);
+  margin-bottom: 25px;
+}
+
+.tl-modal-content {
+  color: rgba(255,255,255,0.9);
+  line-height: 1.8;
+  font-size: 1.05rem;
+  font-style: italic;
+  margin-bottom: 30px;
+  text-align: left;
+}
+
+.tl-modal-img {
+  width: 100%;
+  max-height: 240px;
+  object-fit: cover;
+  border-radius: 16px;
+  margin-bottom: 20px;
+  box-shadow: 0 8px 30px rgba(0,0,0,0.4);
+}
