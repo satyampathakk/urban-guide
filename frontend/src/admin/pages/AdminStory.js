@@ -2,8 +2,8 @@ import React, { useEffect, useState, useRef } from 'react';
 import adminApi from '../adminApi';
 import { toast } from '../AdminApp';
 import AdminModal from '../AdminModal';
+import { mediaUrl } from '../../utils/mediaUrl';
 
-const BASE = 'https://api.032403.xyz';
 const EMPTY_CH = { title: '', subtitle: '', emoji: '💕', video_url: '', sort_order: 0 };
 const EMPTY_SL = { chapter_id: '', slide_type: 'memory', title: '', caption: '', media_url: '', sort_order: 0 };
 
@@ -46,7 +46,7 @@ export default function AdminStory() {
     const fd = new FormData(); fd.append('file', file);
     try {
       const { data } = await adminApi.post('/admin/upload', fd);
-      setChForm(f => ({ ...f, video_url: `${BASE}${data.url}` }));
+      setChForm(f => ({ ...f, video_url: data.url }));
       toast('Video uploaded ✓');
     } catch { toast('Upload failed', 'error'); }
     finally { setChUploading(false); }
@@ -80,7 +80,7 @@ export default function AdminStory() {
     const fd = new FormData(); fd.append('file', file);
     try {
       const { data } = await adminApi.post('/admin/upload', fd);
-      setSlForm(f => ({ ...f, media_url: `${BASE}${data.url}` }));
+      setSlForm(f => ({ ...f, media_url: data.url }));
       toast('File uploaded ✓');
     } catch { toast('Upload failed', 'error'); }
     finally { setUploading(false); }
@@ -170,10 +170,10 @@ export default function AdminStory() {
                           <td style={{ fontWeight: 500 }}>{sl.title || <em style={{ color: 'var(--am)' }}>untitled</em>}</td>
                           <td>
                             {sl.media_url && sl.slide_type === 'video' && (
-                              <video src={sl.media_url} style={{ height: 40, borderRadius: 6 }} />
+                              <video src={mediaUrl(sl.media_url)} style={{ height: 40, borderRadius: 6 }} />
                             )}
                             {sl.media_url && sl.slide_type === 'image' && (
-                              <img src={sl.media_url} alt="" style={{ height: 40, borderRadius: 6, objectFit: 'cover' }} />
+                              <img src={mediaUrl(sl.media_url)} alt="" style={{ height: 40, borderRadius: 6, objectFit: 'cover' }} />
                             )}
                             {sl.slide_type === 'memory' && <span style={{ color: 'var(--am)', fontSize: '0.8rem' }}>from memories</span>}
                           </td>
@@ -236,7 +236,7 @@ export default function AdminStory() {
               )}
             </div>
             {chForm.video_url && (
-              <video src={chForm.video_url} controls
+              <video src={mediaUrl(chForm.video_url)} controls
                 style={{ marginTop: 10, width: '100%', maxHeight: 160, borderRadius: 10, background: '#000' }} />
             )}
             {!chForm.video_url && (
@@ -293,10 +293,10 @@ export default function AdminStory() {
               </div>
               {/* Preview */}
               {slForm.media_url && slForm.slide_type === 'image' && (
-                <img src={slForm.media_url} alt="preview" style={{ marginTop: 8, maxHeight: 100, borderRadius: 8 }} />
+                <img src={mediaUrl(slForm.media_url)} alt="preview" style={{ marginTop: 8, maxHeight: 100, borderRadius: 8 }} />
               )}
               {slForm.media_url && slForm.slide_type === 'video' && (
-                <video src={slForm.media_url} controls style={{ marginTop: 8, maxHeight: 120, borderRadius: 8, width: '100%' }} />
+                <video src={mediaUrl(slForm.media_url)} controls style={{ marginTop: 8, maxHeight: 120, borderRadius: 8, width: '100%' }} />
               )}
             </div>
           )}
