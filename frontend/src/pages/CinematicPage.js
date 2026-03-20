@@ -1,39 +1,38 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import axios from 'axios';
+import { mediaUrl } from '../utils/mediaUrl';
 import './CinematicPage.css';
-
-const BASE = 'https://api.032403.xyz';
 
 // Fallback chapters if none in DB
 const FALLBACK_CHAPTERS = [
   { id: 1, title: 'Chapter 1', subtitle: 'How It Started', emoji: '🌱', sort_order: 0 },
-  { id: 2, title: 'Chapter 2', subtitle: 'Our Moments',    emoji: '💕', sort_order: 1 },
+  { id: 2, title: 'Chapter 2', subtitle: 'Our Moments', emoji: '💕', sort_order: 1 },
   { id: 3, title: 'Chapter 3', subtitle: 'Today & Always', emoji: '🌟', sort_order: 2 },
 ];
 
 const FALLBACK_MEMORIES = [
-  { id:1, title:'The First Hello',    caption:'Everything changed in that one moment.',              image_url:'', chapter_id: 1 },
-  { id:2, title:'First Valentine\'s', caption:'Roses, candlelight, and a feeling I\'d never felt.', image_url:'', chapter_id: 1 },
-  { id:3, title:'Our First Trip',     caption:'We got lost on purpose and found something beautiful.', image_url:'', chapter_id: 2 },
-  { id:4, title:'Said I Love You',    caption:'Three words. A thousand feelings.',                   image_url:'', chapter_id: 2 },
-  { id:5, title:'Beach Sunset',       caption:'Walking hand in hand as the sun painted the sky.',   image_url:'', chapter_id: 3 },
-  { id:6, title:'Today',              caption:'Still falling. Still grateful. Still yours.',         image_url:'', chapter_id: 3 },
+  { id: 1, title: 'The First Hello', caption: 'Everything changed in that one moment.', image_url: '', chapter_id: 1 },
+  { id: 2, title: 'First Valentine\'s', caption: 'Roses, candlelight, and a feeling I\'d never felt.', image_url: '', chapter_id: 1 },
+  { id: 3, title: 'Our First Trip', caption: 'We got lost on purpose and found something beautiful.', image_url: '', chapter_id: 2 },
+  { id: 4, title: 'Said I Love You', caption: 'Three words. A thousand feelings.', image_url: '', chapter_id: 2 },
+  { id: 5, title: 'Beach Sunset', caption: 'Walking hand in hand as the sun painted the sky.', image_url: '', chapter_id: 3 },
+  { id: 6, title: 'Today', caption: 'Still falling. Still grateful. Still yours.', image_url: '', chapter_id: 3 },
 ];
 
 export default function CinematicPage() {
   const [chapters, setChapters] = useState([]);
-  const [slides, setSlides]     = useState([]);
+  const [slides, setSlides] = useState([]);
   const [memories, setMemories] = useState([]);
-  const [playing, setPlaying]   = useState(false);
-  const [step, setStep]         = useState(0);
-  const [done, setDone]         = useState(false);
+  const [playing, setPlaying] = useState(false);
+  const [step, setStep] = useState(0);
+  const [done, setDone] = useState(false);
   const [builtSlides, setBuiltSlides] = useState([]);
 
   useEffect(() => {
     Promise.all([
-      axios.get(`${BASE}/admin/story/chapters`).catch(() => ({ data: [] })),
-      axios.get(`${BASE}/admin/story/slides`).catch(() => ({ data: [] })),
+      axios.get('/admin/story/chapters').catch(() => ({ data: [] })),
+      axios.get('/admin/story/slides').catch(() => ({ data: [] })),
       axios.get('/api/memories').catch(() => ({ data: [] })),
     ]).then(([ch, sl, mem]) => {
       const chs = ch.data.length ? ch.data : FALLBACK_CHAPTERS;
@@ -161,7 +160,7 @@ export default function CinematicPage() {
             {/* Chapter background video */}
             {current.video_url && (
               <video
-                src={current.video_url}
+                src={mediaUrl(current.video_url)}
                 autoPlay muted loop playsInline
                 className="chapter-bg-video"
               />
@@ -188,7 +187,7 @@ export default function CinematicPage() {
             initial={{ opacity: 0, scale: 1.05 }} animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.95 }} transition={{ duration: 1.2 }}>
             {current.image_url
-              ? <img src={current.image_url} alt={current.title} className="cinematic-img" onError={e => { e.target.style.display = 'none'; }} />
+              ? <img src={mediaUrl(current.image_url)} alt={current.title} className="cinematic-img" onError={e => { e.target.style.display = 'none'; }} />
               : <div className="cinematic-img-placeholder">💕</div>}
             <div className="cinematic-text-overlay">
               <motion.h2 className="cinematic-memory-title"
@@ -208,7 +207,7 @@ export default function CinematicPage() {
             initial={{ opacity: 0, scale: 1.05 }} animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.95 }} transition={{ duration: 1.2 }}>
             {current.media_url
-              ? <img src={current.media_url} alt={current.title} className="cinematic-img" />
+              ? <img src={mediaUrl(current.media_url)} alt={current.title} className="cinematic-img" />
               : <div className="cinematic-img-placeholder">🖼️</div>}
             <div className="cinematic-text-overlay">
               <motion.h2 className="cinematic-memory-title"
@@ -231,7 +230,7 @@ export default function CinematicPage() {
             exit={{ opacity: 0 }} transition={{ duration: 0.8 }}
             onClick={e => e.stopPropagation()}>
             <video
-              src={current.media_url}
+              src={mediaUrl(current.media_url)}
               className="cinematic-video"
               autoPlay
               controls
