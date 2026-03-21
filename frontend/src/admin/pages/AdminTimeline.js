@@ -2,6 +2,7 @@ import React, { useEffect, useState, useRef } from 'react';
 import adminApi from '../adminApi';
 import { toast } from '../AdminApp';
 import AdminModal from '../AdminModal';
+import { mediaUrl } from '../../utils/mediaUrl';
 
 const EMPTY = { title: '', description: '', event_date: '', emoji: '💕', media_url: '', sort_order: 0 };
 
@@ -13,13 +14,15 @@ export default function AdminTimeline() {
   const [uploading, setUploading] = useState(false);
   const fileRef = useRef();
 
-  const load = () => adminApi.get('/admin/timeline').then(r => setItems(r.data)).catch(() => {});
+  const load = () => adminApi.get('/admin/timeline').then(r => setItems(r.data)).catch(() => { });
   useEffect(() => { load(); }, []);
 
   const openNew = () => { setForm(EMPTY); setEditing(null); setModal(true); };
   const openEdit = (item) => {
-    setForm({ title: item.title, description: item.description || '', event_date: item.event_date || '',
-      emoji: item.emoji || '💕', media_url: item.media_url || '', sort_order: item.sort_order || 0 });
+    setForm({
+      title: item.title, description: item.description || '', event_date: item.event_date || '',
+      emoji: item.emoji || '💕', media_url: item.media_url || '', sort_order: item.sort_order || 0
+    });
     setEditing(item.id); setModal(true);
   };
 
@@ -74,7 +77,7 @@ export default function AdminTimeline() {
                   <td style={{ color: 'var(--am)', fontSize: '0.82rem' }}>{item.event_date}</td>
                   <td>
                     {item.media_url
-                      ? <img src={item.media_url} alt="" style={{ width: 40, height: 40, objectFit: 'cover', borderRadius: 6 }} />
+                      ? <img src={mediaUrl(item.media_url)} alt="" style={{ width: 40, height: 40, objectFit: 'cover', borderRadius: 6 }} />
                       : <span style={{ color: 'var(--am)', fontSize: '0.8rem' }}>—</span>}
                   </td>
                   <td>
@@ -127,7 +130,7 @@ export default function AdminTimeline() {
               </button>
               {form.media_url && (
                 <>
-                  <img src={form.media_url} alt="" style={{ width: 48, height: 48, objectFit: 'cover', borderRadius: 8 }} />
+                  <img src={mediaUrl(form.media_url)} alt="" style={{ width: 48, height: 48, objectFit: 'cover', borderRadius: 8 }} />
                   <button type="button" className="admin-btn admin-btn-danger admin-btn-sm"
                     onClick={() => f('media_url', '')}>Remove</button>
                 </>
