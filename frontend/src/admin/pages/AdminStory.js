@@ -8,23 +8,23 @@ const EMPTY_CH = { title: '', subtitle: '', emoji: '💕', video_url: '', sort_o
 const EMPTY_SL = { chapter_id: '', slide_type: 'memory', title: '', caption: '', media_url: '', sort_order: 0 };
 
 export default function AdminStory() {
-  const [chapters, setChapters]   = useState([]);
-  const [slides, setSlides]       = useState([]);
-  const [chModal, setChModal]     = useState(false);
-  const [slModal, setSlModal]     = useState(false);
-  const [chForm, setChForm]       = useState(EMPTY_CH);
-  const [slForm, setSlForm]       = useState(EMPTY_SL);
-  const [editCh, setEditCh]       = useState(null);
-  const [editSl, setEditSl]       = useState(null);
+  const [chapters, setChapters] = useState([]);
+  const [slides, setSlides] = useState([]);
+  const [chModal, setChModal] = useState(false);
+  const [slModal, setSlModal] = useState(false);
+  const [chForm, setChForm] = useState(EMPTY_CH);
+  const [slForm, setSlForm] = useState(EMPTY_SL);
+  const [editCh, setEditCh] = useState(null);
+  const [editSl, setEditSl] = useState(null);
   const [uploading, setUploading] = useState(false);
   const [chUploading, setChUploading] = useState(false);
   const [activeChapter, setActiveChapter] = useState(null);
-  const [bulkModal, setBulkModal]   = useState(false);
-  const [bulkFiles, setBulkFiles]   = useState([]);
-  const [bulkChId, setBulkChId]     = useState(null);
-  const [bulkBusy, setBulkBusy]     = useState(false);
-  const fileRef     = useRef();
-  const chFileRef   = useRef();
+  const [bulkModal, setBulkModal] = useState(false);
+  const [bulkFiles, setBulkFiles] = useState([]);
+  const [bulkChId, setBulkChId] = useState(null);
+  const [bulkBusy, setBulkBusy] = useState(false);
+  const fileRef = useRef();
+  const chFileRef = useRef();
   const bulkFileRef = useRef();
 
   const loadAll = async () => {
@@ -40,9 +40,9 @@ export default function AdminStory() {
   useEffect(() => { loadAll(); }, []);
 
   // ── Chapter CRUD ──
-  const openNewCh  = () => { setChForm(EMPTY_CH); setEditCh(null); setChModal(true); };
+  const openNewCh = () => { setChForm(EMPTY_CH); setEditCh(null); setChModal(true); };
   const openEditCh = (ch) => {
-    setChForm({ title:ch.title, subtitle:ch.subtitle||'', emoji:ch.emoji||'💕', video_url:ch.video_url||'', sort_order:ch.sort_order||0 });
+    setChForm({ title: ch.title, subtitle: ch.subtitle || '', emoji: ch.emoji || '💕', video_url: ch.video_url || '', sort_order: ch.sort_order || 0 });
     setEditCh(ch.id); setChModal(true);
   };
 
@@ -61,7 +61,7 @@ export default function AdminStory() {
     e.preventDefault();
     try {
       editCh ? await adminApi.put(`/admin/story/chapters/${editCh}`, chForm)
-             : await adminApi.post('/admin/story/chapters', chForm);
+        : await adminApi.post('/admin/story/chapters', chForm);
       toast(editCh ? 'Chapter updated ✓' : 'Chapter created ✓');
       setChModal(false); loadAll();
     } catch { toast('Save failed', 'error'); }
@@ -74,9 +74,9 @@ export default function AdminStory() {
   };
 
   // ── Slide CRUD ──
-  const openNewSl  = (chId) => { setSlForm({ ...EMPTY_SL, chapter_id: chId }); setEditSl(null); setSlModal(true); };
+  const openNewSl = (chId) => { setSlForm({ ...EMPTY_SL, chapter_id: chId }); setEditSl(null); setSlModal(true); };
   const openEditSl = (sl) => {
-    setSlForm({ chapter_id:sl.chapter_id, slide_type:sl.slide_type, title:sl.title||'', caption:sl.caption||'', media_url:sl.media_url||'', sort_order:sl.sort_order||0 });
+    setSlForm({ chapter_id: sl.chapter_id, slide_type: sl.slide_type, title: sl.title || '', caption: sl.caption || '', media_url: sl.media_url || '', sort_order: sl.sort_order || 0 });
     setEditSl(sl.id); setSlModal(true);
   };
 
@@ -95,7 +95,7 @@ export default function AdminStory() {
     e.preventDefault();
     try {
       editSl ? await adminApi.put(`/admin/story/slides/${editSl}`, slForm)
-             : await adminApi.post('/admin/story/slides', slForm);
+        : await adminApi.post('/admin/story/slides', slForm);
       toast(editSl ? 'Slide updated ✓' : 'Slide created ✓');
       setSlModal(false); loadAll();
     } catch { toast('Save failed', 'error'); }
@@ -162,7 +162,7 @@ export default function AdminStory() {
   const closeBulk = () => { setBulkModal(false); setBulkFiles([]); };
 
   const chSlides = slides.filter(s => s.chapter_id === activeChapter);
-  const typeIcon = t => ({ memory:'📖', video:'🎬', image:'🖼️' }[t] || '📄');
+  const typeIcon = t => ({ memory: '📖', video: '🎬', image: '🖼️' }[t] || '📄');
 
   const f = (k, v) => setSlForm(p => ({ ...p, [k]: v }));
 
@@ -170,7 +170,15 @@ export default function AdminStory() {
     <div>
       <div className="admin-page-header">
         <h1 className="admin-page-title">🎬 Story Mode</h1>
-        <button className="admin-btn admin-btn-primary" onClick={openNewCh}>+ Add Chapter</button>
+        <div style={{ display: 'flex', gap: 8 }}>
+          <button className="admin-btn admin-btn-secondary" onClick={() => {
+            if (!activeChapter) { toast('Select a chapter first', 'error'); return; }
+            openBulk(activeChapter);
+          }}>
+            📁 Bulk Upload Videos
+          </button>
+          <button className="admin-btn admin-btn-primary" onClick={openNewCh}>+ Add Chapter</button>
+        </div>
       </div>
 
       <div style={{ display: 'grid', gridTemplateColumns: '260px 1fr', gap: 18, alignItems: 'start' }}>
@@ -225,7 +233,7 @@ export default function AdminStory() {
                   <table className="admin-table">
                     <thead><tr><th>#</th><th>Type</th><th>Title</th><th>Media</th><th></th></tr></thead>
                     <tbody>
-                      {chSlides.sort((a,b) => a.sort_order - b.sort_order).map(sl => (
+                      {chSlides.sort((a, b) => a.sort_order - b.sort_order).map(sl => (
                         <tr key={sl.id}>
                           <td style={{ color: 'var(--am)' }}>{sl.sort_order}</td>
                           <td><span className="admin-badge badge-purple">{typeIcon(sl.slide_type)} {sl.slide_type}</span></td>
