@@ -8,14 +8,6 @@ import './AnniversaryExperience.css';
 const REDIRECT_TARGET = '/cinematic';
 const AUTO_REDIRECT_MS = 9000;
 
-const getTodayKey = () => {
-  const now = new Date();
-  const y = now.getFullYear();
-  const m = String(now.getMonth() + 1).padStart(2, '0');
-  const d = String(now.getDate()).padStart(2, '0');
-  return `${y}-${m}-${d}`;
-};
-
 const isVideoUrl = (url) => /\.(mp4|webm|ogg)$/i.test(url || '');
 
 export default function AnniversaryExperience() {
@@ -59,11 +51,8 @@ export default function AnniversaryExperience() {
 
   useEffect(() => {
     if (!event) return;
-    const key = `anniversary_seen_${getTodayKey()}`;
-    if (!localStorage.getItem(key)) {
-      setShow(true);
-      localStorage.setItem(key, '1');
-    }
+    // Show on every login for the whole day
+    setShow(true);
   }, [event]);
 
   useEffect(() => {

@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import adminApi from '../adminApi';
 import { toast } from '../AdminApp';
 import AdminModal from '../AdminModal';
+import { mediaUrl } from '../../utils/mediaUrl';
 
 const EMPTY = { title: '', message: '', month: '', day: '', media_url: '', media_type: '', music_url: '' };
 
@@ -124,7 +125,7 @@ export default function AdminAnniversary() {
                     {item.media_url
                       ? ((item.media_type || (isVideoUrl(item.media_url) ? 'video' : 'image')) === 'video'
                         ? <span style={{ fontSize: '0.8rem', color: 'var(--am)' }}>Video</span>
-                        : <img src={item.media_url} alt="" style={{ width: 40, height: 40, objectFit: 'cover', borderRadius: 6 }} />)
+                        : <img src={mediaUrl(item.media_url)} alt="" style={{ width: 40, height: 40, objectFit: 'cover', borderRadius: 6 }} />)
                       : <span style={{ color: 'var(--am)', fontSize: '0.8rem' }}>-</span>}
                   </td>
                   <td>
@@ -186,7 +187,7 @@ export default function AdminAnniversary() {
                 </button>
                 {form.music_url && (
                   <>
-                    <audio src={form.music_url} controls style={{ height: 32 }} />
+                    <audio src={mediaUrl(form.music_url)} controls style={{ height: 32 }} />
                     <button type="button" className="admin-btn admin-btn-danger admin-btn-sm"
                       onClick={() => f('music_url', '')}>Remove</button>
                   </>
@@ -210,7 +211,7 @@ export default function AdminAnniversary() {
                 <>
                   {form.media_type === 'video'
                     ? <span style={{ fontSize: '0.85rem', color: 'var(--am)' }}>Video attached</span>
-                    : <img src={form.media_url} alt="" style={{ width: 48, height: 48, objectFit: 'cover', borderRadius: 8 }} />}
+                    : <img src={mediaUrl(form.media_url)} alt="" style={{ width: 48, height: 48, objectFit: 'cover', borderRadius: 8 }} />}
                   <button type="button" className="admin-btn admin-btn-danger admin-btn-sm"
                     onClick={() => f('media_url', '')}>Remove</button>
                 </>

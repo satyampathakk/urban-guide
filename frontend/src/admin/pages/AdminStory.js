@@ -19,8 +19,13 @@ export default function AdminStory() {
   const [uploading, setUploading] = useState(false);
   const [chUploading, setChUploading] = useState(false);
   const [activeChapter, setActiveChapter] = useState(null);
-  const fileRef   = useRef();
-  const chFileRef = useRef();
+  const [bulkModal, setBulkModal]   = useState(false);
+  const [bulkFiles, setBulkFiles]   = useState([]);
+  const [bulkChId, setBulkChId]     = useState(null);
+  const [bulkBusy, setBulkBusy]     = useState(false);
+  const fileRef     = useRef();
+  const chFileRef   = useRef();
+  const bulkFileRef = useRef();
 
   const loadAll = async () => {
     const [c, s] = await Promise.all([
@@ -102,6 +107,60 @@ export default function AdminStory() {
     toast('Slide deleted', 'warning'); loadAll();
   };
 
+  // ── Bulk video upload ──
+  const openBulk = (chId) => {
+    setBulkChId(chId);
+    setBulkFiles([]);
+    setBulkModal(true);
+  };
+
+  const addBulkFiles = (fileList) => {
+    const entries = Array.from(fileList)
+      .filter(f => f.type.startsWith('video/'))
+      .map(file => ({
+        id: Math.random().toString(36).slice(2),
+        file,
+        name: file.name,
+        uploading: false,
+        done: false,
+        error: false,
+      }));
+    setBulkFiles(prev => [...prev, ...entries]);
+  };
+
+  const uploadAllVideos = async () => {
+    const pending = bulkFiles.filter(f => !f.done && !f.error);
+    if (!pending.length) return;
+    setBulkBusy(true);
+    let nextOrder = slides.filter(s => s.chapter_id === bulkChId).length;
+
+    for (const entry of pending) {
+      setBulkFiles(prev => prev.map(f => f.id === entry.id ? { ...f, uploading: true } : f));
+      try {
+        const fd = new FormData(); fd.append('file', entry.file);
+        const { data } = await adminApi.post('/admin/upload', fd);
+        const title = entry.file.name.replace(/\.[^.]+$/, '').replace(/[-_]/g, ' ');
+        await adminApi.post('/admin/story/slides', {
+          chapter_id: bulkChId,
+          slide_type: 'video',
+          title,
+          caption: '',
+          media_url: data.url,
+          sort_order: nextOrder++,
+        });
+        setBulkFiles(prev => prev.map(f => f.id === entry.id ? { ...f, uploading: false, done: true } : f));
+      } catch {
+        setBulkFiles(prev => prev.map(f => f.id === entry.id ? { ...f, uploading: false, error: true } : f));
+      }
+    }
+
+    setBulkBusy(false);
+    toast(`${pending.length} video${pending.length > 1 ? 's' : ''} added ✓`);
+    loadAll();
+  };
+
+  const closeBulk = () => { setBulkModal(false); setBulkFiles([]); };
+
   const chSlides = slides.filter(s => s.chapter_id === activeChapter);
   const typeIcon = t => ({ memory:'📖', video:'🎬', image:'🖼️' }[t] || '📄');
 
@@ -153,7 +212,10 @@ export default function AdminStory() {
                 <p style={{ fontSize: '0.9rem', fontWeight: 600, color: 'var(--at)' }}>
                   Slides — {chapters.find(c => c.id === activeChapter)?.title}
                 </p>
-                <button className="admin-btn admin-btn-primary admin-btn-sm" onClick={() => openNewSl(activeChapter)}>+ Add Slide</button>
+                <div style={{ display: 'flex', gap: 8 }}>
+                  <button className="admin-btn admin-btn-secondary admin-btn-sm" onClick={() => openBulk(activeChapter)}>📁 Bulk Videos</button>
+                  <button className="admin-btn admin-btn-primary admin-btn-sm" onClick={() => openNewSl(activeChapter)}>+ Add Slide</button>
+                </div>
               </div>
 
               <div className="admin-card">
@@ -310,6 +372,69 @@ export default function AdminStory() {
             <button type="submit" className="admin-btn admin-btn-primary">Save</button>
           </div>
         </form>
+      </AdminModal>
+
+      {/* ── Bulk video upload modal ── */}
+      <AdminModal open={bulkModal} onClose={closeBulk} title="📁 Bulk Upload Videos">
+        <div
+          style={{
+            border: '2px dashed rgba(255,255,255,0.2)', borderRadius: 12,
+            padding: '28px 20px', textAlign: 'center', cursor: 'pointer',
+            background: 'rgba(255,255,255,0.03)', marginBottom: 16,
+          }}
+          onClick={() => bulkFileRef.current.click()}
+          onDragOver={e => e.preventDefault()}
+          onDrop={e => { e.preventDefault(); addBulkFiles(e.dataTransfer.files); }}
+        >
+          <input ref={bulkFileRef} type="file" accept="video/*" multiple style={{ display: 'none' }}
+            onChange={e => addBulkFiles(e.target.files)} />
+          <div style={{ fontSize: '2rem', marginBottom: 8 }}>🎬</div>
+          <p style={{ color: 'var(--at)', fontSize: '0.9rem' }}>Click or drag & drop video files</p>
+          <p style={{ color: 'var(--am)', fontSize: '0.75rem', marginTop: 4 }}>MP4, WebM, OGG — multiple files at once</p>
+        </div>
+
+        {bulkFiles.length > 0 && (
+          <>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 8, maxHeight: 260, overflowY: 'auto', marginBottom: 16 }}>
+              {bulkFiles.map(entry => (
+                <div key={entry.id} style={{
+                  display: 'flex', alignItems: 'center', gap: 10,
+                  background: 'rgba(255,255,255,0.05)', borderRadius: 8, padding: '8px 12px',
+                }}>
+                  <span style={{ fontSize: '1.1rem' }}>
+                    {entry.uploading ? '⏳' : entry.done ? '✅' : entry.error ? '❌' : '🎬'}
+                  </span>
+                  <span style={{ flex: 1, fontSize: '0.85rem', color: 'var(--at)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                    {entry.name}
+                  </span>
+                  {!entry.uploading && !entry.done && (
+                    <button className="admin-btn admin-btn-danger admin-btn-sm"
+                      onClick={() => setBulkFiles(p => p.filter(f => f.id !== entry.id))}>✕</button>
+                  )}
+                </div>
+              ))}
+            </div>
+
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+              <span style={{ fontSize: '0.8rem', color: 'var(--am)' }}>
+                {bulkFiles.filter(f => f.done).length}/{bulkFiles.length} uploaded
+                {bulkFiles.some(f => f.error) && <span style={{ color: 'var(--err)', marginLeft: 8 }}>• {bulkFiles.filter(f => f.error).length} failed</span>}
+              </span>
+              <div style={{ display: 'flex', gap: 8 }}>
+                {bulkFiles.every(f => f.done || f.error) ? (
+                  <button className="admin-btn admin-btn-primary" onClick={closeBulk}>Done ✓</button>
+                ) : (
+                  <>
+                    <button className="admin-btn admin-btn-secondary" onClick={closeBulk}>Cancel</button>
+                    <button className="admin-btn admin-btn-primary" onClick={uploadAllVideos} disabled={bulkBusy}>
+                      {bulkBusy ? 'Uploading…' : `Upload ${bulkFiles.filter(f => !f.done && !f.error).length} Video${bulkFiles.filter(f => !f.done && !f.error).length !== 1 ? 's' : ''}`}
+                    </button>
+                  </>
+                )}
+              </div>
+            </div>
+          </>
+        )}
       </AdminModal>
     </div>
   );
